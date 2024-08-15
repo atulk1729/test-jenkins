@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'com.example'
@@ -7,6 +8,10 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+application {
+    mainClassName = 'com.example.starter.Main' // Replace with your main class
 }
 
 dependencies {
@@ -17,4 +22,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+tasks.register('customFatJar', Jar) {
+    manifest {
+        attributes 'Main-Class': 'com.example.starter.Main'
+    }
+    archiveBaseName = 'all-in-one-jar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
