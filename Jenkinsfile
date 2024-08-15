@@ -9,8 +9,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'echo "Hello"'
-                sh 'docker --version'
+                sh 'gradle --version'
             }
         }
         // Add stages for testing and deployment
