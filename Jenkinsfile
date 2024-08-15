@@ -8,7 +8,7 @@ pipeline {
     environment {
         JAR_PATH = 'build/libs/all-in-one-jar-1.0-SNAPSHOT.jar'
         DEPLOY_DIR = '/opt/test-jenkins'
-        LOG_FILE = '/var/log/myapp.log'
+        LOG_FILE = '/var/log/test-jenkins/myapp.log'
     }
 
     stages {
