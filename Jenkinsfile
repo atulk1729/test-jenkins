@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo "Hello"'
-                sh 'touch /home/atul/a.cpp'
+                sh 'docker --version'
             }
         }
         // Add stages for testing and deployment
