@@ -6,9 +6,9 @@ pipeline {
     }
 
     environment {
-        // Define environment variables
         JAR_PATH = 'build/libs/all-in-one-jar-1.0-SNAPSHOT.jar'
         DEPLOY_DIR = '/opt/test-jenkins'
+        LOG_FILE = '/var/log/myapp.log'
     }
 
     stages {
@@ -22,16 +22,19 @@ pipeline {
                 sh 'gradle clean build customFatJar'
             }
         }
-        // Add stages for testing and deployment
+
         stage('Deploy') {
             steps {
                 script {
-                    // Move the JAR file to the deployment directory
-                    sh "mv ${JAR_PATH} ${DEPLOY_DIR}/"
+                    try {
+                        // Move the JAR file to the deployment directory
+                        sh "mv ${JAR_PATH} ${DEPLOY_DIR}/"
 
-                    // Run the JAR file
-                    // Adjust the command if you need to pass arguments or run the JAR differently
-                    sh "java -jar ${DEPLOY_DIR}/all-in-one-jar-1.0-SNAPSHOT.jar"
+                        // Run the JAR file using nohup
+                        sh "nohup java -jar ${DEPLOY_DIR}/all-in-one-jar-1.0-SNAPSHOT.jar > ${LOG_FILE} 2>&1 &"
+                    } catch (Exception e) {
+                        error "Deployment failed: ${e.getMessage()}"
+                    }
                 }
             }
         }
