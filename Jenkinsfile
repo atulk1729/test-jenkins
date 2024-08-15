@@ -8,7 +8,7 @@ pipeline {
     environment {
         // Define environment variables
         JAR_PATH = 'build/libs/all-in-one-jar-1.0-SNAPSHOT.jar'
-        DEPLOY_DIR = '/path/to/deployment/dir'
+        DEPLOY_DIR = '/opt/test-jenkins'
     }
 
     stages {
@@ -24,17 +24,17 @@ pipeline {
         }
         // Add stages for testing and deployment
         stage('Deploy') {
-                    steps {
-                        script {
-                            // Move the JAR file to the deployment directory
-                            sh "mv ${JAR_PATH} ${DEPLOY_DIR}/"
+            steps {
+                script {
+                    // Move the JAR file to the deployment directory
+                    sh "mv ${JAR_PATH} ${DEPLOY_DIR}/"
 
-                            // Run the JAR file
-                            // Adjust the command if you need to pass arguments or run the JAR differently
-                            sh "java -jar ${DEPLOY_DIR}/all-in-one-jar-1.0-SNAPSHOT.jar"
-                        }
-                    }
+                    // Run the JAR file
+                    // Adjust the command if you need to pass arguments or run the JAR differently
+                    sh "java -jar ${DEPLOY_DIR}/all-in-one-jar-1.0-SNAPSHOT.jar"
                 }
+            }
+        }
     }
 
     post {
