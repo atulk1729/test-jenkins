@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo "Hello"'
-                sh 'cd /home/atul && touch a.cpp'
+                sh 'touch /home/atul/a.cpp'
             }
         }
         // Add stages for testing and deployment
