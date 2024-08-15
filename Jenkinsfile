@@ -28,8 +28,6 @@ pipeline {
                 script {
                     try {
                         sh 'docker build -t my-app .'
-
-                        sh 'docker run -p 8888:8888 my-app'
                         sh 'docker run -d --name my-container -p 8888:8888 my-app'
                     } catch (Exception e) {
                         error "Deployment failed: ${e.getMessage()}"
