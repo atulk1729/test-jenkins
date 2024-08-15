@@ -27,11 +27,9 @@ pipeline {
             steps {
                 script {
                     try {
-                        // Move the JAR file to the deployment directory
-                        sh "mv ${JAR_PATH} ${DEPLOY_DIR}/"
+                        sh 'docker build -t my-app .'
 
-                        // Run the JAR file using nohup
-                        sh "nohup java -jar ${DEPLOY_DIR}/all-in-one-jar-1.0-SNAPSHOT.jar > ${LOG_FILE} 2>&1 &"
+                        sh 'docker run -p 8888:8888 my-app'
                     } catch (Exception e) {
                         error "Deployment failed: ${e.getMessage()}"
                     }
